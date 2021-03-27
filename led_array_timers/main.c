@@ -22,20 +22,16 @@ void setup_ACLK()
     }
     while(IFG1 & OFIFG);
 }
-int main(void)
+void main(void)
 {
 	WDTCTL = WDTPW | WDTHOLD;	// stop watchdog timer
 	register_settings_GPIO();
 	setup_ACLK();
 	register_settings_timer();
 	__bis_SR_register(GIE + LPM3_bits);
-	while(1)
-	    ;
 }
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void leds(void)
 {
     P1OUT = led++;
-    if(led > 7)
-        led =0;
 }
